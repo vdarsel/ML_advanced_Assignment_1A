@@ -5,7 +5,8 @@ from ipywidgets import interact
 
 def main():
     file=["q1A_2_small_tree.pkl","q2_2_medium_tree.pkl","q2_2_large_tree.pkl"]
-    run(file[2])
+    for a in (file):
+        run(a)
 
 def run(file):
     print("\n1. Load tree data from file and print it\n")
