@@ -48,7 +48,7 @@ def generate_sample(N,mu_prime,lambd,a,b):
 
 def print_comparison(val_VI: list, val_post: list, mu_prime : float,lambd : float,a : float,b : float,mu_val:float, tau_val:float, N: int, prior=False):
     x_mu = np.linspace(val_post[0]-2*np.sqrt(val_post[3]/(val_post[1]*val_post[2])),val_post[0]+2*np.sqrt(val_post[3]/(val_post[1]*val_post[2])),100)
-    y_tau = np.linspace(val_post[2]/val_post[3]*(1-2/sqrt(N)),val_post[2]/val_post[3]*(1+2/sqrt(N)),100)
+    y_tau = np.linspace(max(val_post[2]/val_post[3]*(1-2/(np.sqrt(lambd*N))),0.01),val_post[2]/val_post[3]*(1+2/(np.sqrt(lambd*N))),100)
     if (prior):
         x_mu= np.linspace(min(val_post[0],mu_prime,mu_val)-2*np.sqrt(val_post[3]/(val_post[1]*val_post[2])),max(val_post[0],mu_prime,mu_val)+2*np.sqrt(val_post[3]/(val_post[1]*val_post[2])),100)
         y_tau = np.linspace(max(min(a/b/10,tau_val,val_post[2]/val_post[3]/5),0.05),max(a/b,val_post[2]/val_post[3]*2),100)
@@ -63,7 +63,7 @@ def print_comparison(val_VI: list, val_post: list, mu_prime : float,lambd : floa
     M2 = p_tau*p_mu
 
     pp_tau = scs.gamma.pdf(YY,a=a,scale=1/b)
-    pp_mu = scs.norm(mu_prime,1/(lambd*YY)).pdf(XX)
+    pp_mu = scs.norm(mu_prime,1/np.sqrt(lambd*YY)).pdf(XX)
     M3 = pp_tau*pp_mu
 
     plt.figure(figsize=(10,8))
