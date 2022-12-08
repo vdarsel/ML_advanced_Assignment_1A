@@ -6,7 +6,6 @@ def Model(N: int, lambd: float, prior:bool):
     threshold = 0.1
     mu_prime,a,b = 5, 60, 4
     T,m,X = generate_sample(N,mu_prime,lambd,a,b)
-    print(m)
     v = VI(X,mu_prime,lambd,a,b,threshold)
     p = exactPosterior(X,mu_prime,lambd,a,b)
     print_comparison(v,p,mu_prime,lambd,a,b,m,T,N,prior)
