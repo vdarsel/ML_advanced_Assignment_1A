@@ -20,15 +20,10 @@ def update_tau(mu_prime: float, lambd: float , tau_0: float, mu_0: float, a: flo
 def VI(X: np.ndarray,mu_prime : float,lambd : float,a : float,b : float, threshold: float):
     mu_0, tau_0, a_0, b_0 = 5, 5, 5, 5
     mu_1, tau_1, a_1, b_1 = 0, 1, 1, 1
-    # ELBO = update_ELBO(X,mu_0,tau_0,a_0,b_0,mu_prime,lambd,a,b)
-    # ELBO_previous=-np.inf
-    # while((ELBO-ELBO_previous)>threshold):
     while(max(np.power(mu_0-mu_1,2),np.power(tau_0-tau_1,2),np.power(a_0-a_1,2),np.power(b_0-b_1,2))>threshold):
         mu_0, tau_0, a_0, b_0 = mu_1, tau_1, a_1, b_1
         mu_1,tau_1=update_mu(mu_prime,lambd,a_1,b_1,X)
         a_1,b_1 = update_tau(mu_prime,lambd,tau_1,mu_1,a,b,X)
-        # ELBO_previous = ELBO
-        # ELBO = update_ELBO(X,mu_0,tau_0,a_0,b_0,mu_prime,lambd,a,b)
     return mu_0, tau_0, a_0, b_0
 
 def exactPosterior(X: np.ndarray,mu_prime : float,lambd : float,a : float,b : float):

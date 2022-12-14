@@ -14,7 +14,6 @@ class Node:
             self.cat.append(c)
         self.ancestor = None
         self.descendants = []
-        self.likelihood_generated_tree = None
 
     def isLeaf(self):
         """return is the node is a leaf or not"""
@@ -79,13 +78,6 @@ class Tree:
     def Likelihood(self, beta: list):
         if (len(beta)!=self.num_nodes):
             raise("Error: wrong size of Beta")
-        val = 0
-        for a in beta:
-            if np.isnan(a):
-                val+=1
-        # if(val!=self.num_leaves):
-        #     print(val,self.num_leaves)
-        #     raise("Error: Excepted number of nan")
         return self.root.Likelihood(beta)
 
     def create_random_tree(self, seed_val, k, max_num_nodes=10, max_branch=5, alpha=None):
